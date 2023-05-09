@@ -33,16 +33,6 @@ def predict(comment_text):
 
 # Define the Streamlit app
 def main():
-    # Configure the Streamlit app theme
-    st.set_page_config(
-        page_title="My Streamlit App",
-        page_icon=":memo:",
-        layout="wide",
-        initial_sidebar_state="expanded",
-        theme="light"
-    )
-
-    # Adding content to the Streamlit app
     st.title("Toxic Comment Classifier")
 
     # Define the input form
