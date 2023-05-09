@@ -1,8 +1,6 @@
 import streamlit as st
-import xgboost
 import pickle
 import re
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Load the trained model from the file
 with open('xgb_classifier.pkl', 'rb') as f:
@@ -35,6 +33,16 @@ def predict(comment_text):
 
 # Define the Streamlit app
 def main():
+    # Configure the Streamlit app theme
+    st.set_page_config(
+        page_title="My Streamlit App",
+        page_icon=":memo:",
+        layout="wide",
+        initial_sidebar_state="expanded",
+        theme="light"
+    )
+
+    # Adding content to the Streamlit app
     st.title("Toxic Comment Classifier")
 
     # Define the input form
