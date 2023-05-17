@@ -1,6 +1,8 @@
 import streamlit as st
 import pickle
 import re
+import pandas as pd
+import matplotlib.pyplot as plt
 
 # Load the trained model from the file
 with open('xgb_classifier.pkl', 'rb') as f:
@@ -28,7 +30,8 @@ def predict(comment_text):
         "obscene": predictions[2],
         "threat": predictions[3],
         "insult": predictions[4],
-        "identity_hate": predictions[5]}
+        "identity_hate": predictions[5]
+    }
 
 
 # Define the Streamlit app
@@ -43,7 +46,17 @@ def main():
     # Make predictions when the form is submitted
     if submit_button:
         predictions = predict(comment_text)
-        st.write(predictions)
+
+        # Create a DataFrame from the predictions
+        df_predictions = pd.DataFrame.from_dict(predictions, orient='index', columns=['Probability'])
+        df_predictions['Percentage'] = df_predictions['Probability'] * 100
+
+        # Display the predictions as a poll
+        st.subheader("Predictions:")
+        for category, row in df_predictions.iterrows():
+            st.write(f"{category.capitalize()}:")
+            st.progress(row['Percentage'] / 100)
+            st.write(f"{row['Percentage']:.2f}% probability")
 
 
 if __name__ == '__main__':
